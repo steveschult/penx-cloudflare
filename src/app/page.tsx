@@ -1,12 +1,16 @@
-import { createCustomerWithCustomId, getCustomers } from '@/server/functions/customers';
+import {
+  createCustomerWithCustomId,
+  getCustomers,
+} from '@/server/functions/customers'
+import { LoginButton } from './LoginButton'
 
-export const runtime = 'edge';
+export const runtime = 'edge'
 
 export default async function Home() {
-  'use server';
+  'use server'
 
   // either use server actions
-  const customers = await getCustomers();
+  const customers = await getCustomers()
 
   // or fetch the api
   // const response = await fetch(`http://localhost:3000/api`);
@@ -15,18 +19,23 @@ export default async function Home() {
   return (
     <div>
       <p>Your customer IDs</p>
+      <LoginButton />
       <ul>
         {customers.map((customer) => (
           <li key={customer.customerId}>{customer.customerId}</li>
         ))}
         <li>
           <form action={createCustomerWithCustomId}>
-            <input type="text" name="customerId" placeholder="add a new customer ID"></input>
+            <input
+              type="text"
+              name="customerId"
+              placeholder="add a new customer ID"
+            ></input>
             <button type="submit">submit</button>
           </form>
         </li>
       </ul>
       <p>end</p>
     </div>
-  );
+  )
 }

@@ -1,10 +1,15 @@
 import { z } from 'zod'
+import { db } from '../db'
 import { getCustomers } from '../functions/customers'
-import { protectedProcedure, router } from '../trpc'
+import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const userRouter = router({
-  list: protectedProcedure.query(async ({ ctx, input }) => {
+  customers: protectedProcedure.query(async ({ ctx, input }) => {
     const customers = await getCustomers()
     return customers
+  }),
+
+  list: publicProcedure.query(async ({ ctx, input }) => {
+    return db.query.users.findMany()
   }),
 })

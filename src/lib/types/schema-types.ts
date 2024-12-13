@@ -17,10 +17,10 @@ export const SiteMode = {
   NOTE_TAKING: 'NOTE_TAKING',
 }
 
-export const UserRole = {
-  ADMIN: 'ADMIN',
-  AUTHOR: 'AUTHOR',
-  READER: 'READER',
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  AUTHOR = 'AUTHOR',
+  READER = 'READER',
 }
 
 export const PostType = {
@@ -48,4 +48,11 @@ export const PostStatus = {
 export const CommentStatus = {
   OPEN: 'OPEN',
   CLOSED: 'CLOSED',
+}
+
+export const ProviderType = {
+  GOOGLE: 'GOOGLE',
+  GITHUB: 'GITHUB',
+  WALLET: 'WALLET',
+  FARCASTER: 'FARCASTER',
 }

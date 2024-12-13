@@ -1,24 +1,23 @@
 export * from './element-type'
+export * from './defaultPostContent'
 
 export const isServer = typeof window === 'undefined'
 export const isBrowser = typeof window !== 'undefined'
 export const isProd = process.env.NODE_ENV === 'production'
 export const isNavigator = typeof navigator !== 'undefined'
 
-export const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN!
-
 export const GOOGLE_OAUTH_REDIRECT_URI = 'https://www.penx.io/api/google-oauth'
-
+// export const GOOGLE_OAUTH_REDIRECT_URI = 'http://localhost:4000/api/google-oauth'
 export const LINK_GOOGLE_ACCOUNT_REDIRECT_URI =
-  'https://www.penx.io/api/link-google-account-oauth'
+  'https://penx.io/api/link-google-account-oauth'
+// 'http://localhost:4000/api/link-google-account-oauth'
 
-export const STATIC_URL = 'https://static.penx.me'
-
-// export const IPFS_UPLOAD_URL = 'https://penx.io/api/ipfs-upload'
-export const IPFS_UPLOAD_URL = '/api/ipfs-upload'
+export const IPFS_UPLOAD_URL = 'https://penx.io/api/ipfs-upload'
 export const IPFS_ADD_URL = 'https://penx.io/api/ipfs-add'
 // export const IPFS_ADD_URL = 'http://localhost:4000/api/ipfs-add'
 export const IPFS_GATEWAY = 'https://ipfs-gateway.spaceprotocol.xyz'
+
+export const ELECTRIC_BASE_URL = 'http://43.154.135.183:3000'
 
 export const GOOGLE_DRIVE_OAUTH_REDIRECT_URI =
   'https://www.penx.io/api/google-drive-oauth'
@@ -34,12 +33,6 @@ export const PROJECT_ID =
 
 export const GOOGLE_DRIVE_FOLDER_PREFIX = `penx-`
 export const GOOGLE_DRIVE_FOLDER = 'penx'
-
-export const SECONDS_PER_MONTH = BigInt(24 * 60 * 60 * 30) // 30 days
-export const SECONDS_PER_DAY = BigInt(24 * 60 * 60) // 1 days
-
-export const SITE_MODE = 'SITE_MODE'
-export const CURRENT_SITE = 'CURRENT_SITE'
 
 export enum TradeType {
   BUY = 'BUY',
@@ -129,8 +122,3 @@ export const DAILY_CLAIM_CAP_URL =
   NETWORK === NetworkNames.BASE
     ? 'https://penx.io/api/daily-claim-cap'
     : 'https://sepolia.penx.io/api/daily-claim-cap'
-
-export const SUBGRAPH_URL =
-  NETWORK === NetworkNames.BASE
-    ? 'https://gateway.thegraph.com/api/c2921e95d896043ce3602d19cbbedcd2/subgraphs/id/CU3uKSKPmb5UP2imvySrJSHpU5DDnfpV5TdjWqbeZ85M'
-    : 'https://api.studio.thegraph.com/query/88544/respace-base-sepolia/version/latest'

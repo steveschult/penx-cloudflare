@@ -4,7 +4,7 @@ import { trpc } from '@/lib/trpc'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 export function Foo() {
-  const { data, isLoading } = trpc.user.list.useQuery()
+  const { data, isLoading } = trpc.user.customers.useQuery()
   if (isLoading) return <p>Loading...</p>
   return (
     <div>
