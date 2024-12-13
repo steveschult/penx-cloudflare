@@ -1,6 +1,6 @@
-import { defineConfig } from "drizzle-kit";
+import { env } from '@/env';
+import { defineConfig } from 'drizzle-kit';
 
-import { env } from "@/env";
 
 /*
  * NOTE: Workaround to make drizzle studio work with D1.
@@ -9,23 +9,23 @@ import { env } from "@/env";
  */
 export default env.DB_LOCAL_PATH
   ? defineConfig({
-      schema: "./src/server/db/schema.ts",
-      dialect: "sqlite",
+      schema: './src/server/db/schema.ts',
+      dialect: 'sqlite',
       dbCredentials: {
         url: env.DB_LOCAL_PATH as string,
       },
     })
   : defineConfig({
-      schema: "./src/server/db/schema.ts",
-      out: "./migrations",
-      driver: "d1-http",
-      dialect: "sqlite",
+      schema: './src/server/db/schema.ts',
+      out: './migrations',
+      driver: 'd1-http',
+      dialect: 'sqlite',
       dbCredentials: {
         accountId: env.CF_ACCOUNT_ID as string,
         token: env.CF_USER_API_TOKEN as string,
         databaseId:
-          env.NODE_ENV === "preview"
+          env.NODE_ENV === 'preview'
             ? (env.DB_PREVIEW_DATABASE_ID as string)
             : (env.DB_PROD_DATABASE_ID! as string),
       },
-    });
+    })
