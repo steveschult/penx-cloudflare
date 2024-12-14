@@ -5,11 +5,12 @@ import { PostStatus } from '@/lib/constants'
 import { revalidateMetadata } from '@/lib/revalidateTag'
 import { api, trpc } from '@/lib/trpc'
 import { RouterOutputs } from '@/server/_app'
-import { Post, PostTag, Tag } from '@/server/db/schema'
+import { PostTag, Tag } from '@/server/db/schema'
 import { store } from '@/store'
 import { atom, useAtom } from 'jotai'
 import { postLoadingAtom } from './usePostLoading'
 
+export type Post = RouterOutputs['post']['byId']
 export type PostTagWithTag = PostTag & { tag: Tag }
 
 export const postAtom = atom<Post>(null as any as Post)
@@ -25,7 +26,7 @@ export function updatePostPublishStatus() {
     ...post,
     postStatus: PostStatus.PUBLISHED,
     publishedAt: new Date(),
-  })
+  } as any)
 }
 
 export function addPostTag(postTag: PostTagWithTag) {

@@ -35,7 +35,7 @@ export const postRouter = router({
 
     syncToGoogleDrive(ctx.token.uid, post as any)
     // console.log('post-------xxxxxxxxxx:', post?.postTags)
-    return post
+    return post!
   }),
 
   bySlug: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {

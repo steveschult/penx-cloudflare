@@ -230,7 +230,7 @@ export const comments = table(
       .$defaultFn(() => v4()),
     content: text('content').default(''),
     parentId: text('parentId').default(''),
-    replyCount: integer('replyCount').default(0),
+    replyCount: integer('replyCount').notNull().default(0),
     postId: text('postId').notNull(),
     userId: text('userId').notNull(),
     createdAt: integer('createdAt', { mode: 'timestamp' })
