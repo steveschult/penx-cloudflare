@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { defaultSession, SessionData } from '@/lib/session'
 import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
@@ -41,7 +42,7 @@ export default function useSession() {
     sessionApiRoute,
     fetchJson<SessionData>,
     {
-      fallbackData: defaultSession,
+      // fallbackData: defaultSession,
     },
   )
 
@@ -52,5 +53,21 @@ export default function useSession() {
   const { trigger: logout } = useSWRMutation(sessionApiRoute, doLogout)
   const { trigger: increment } = useSWRMutation(sessionApiRoute, doIncrement)
 
-  return { session, logout, login, increment, isLoading }
+  const status = useMemo(() => {
+    if (isLoading) return 'loading'
+    if (!session) return 'unauthenticated'
+    if (session) return 'authenticated'
+    return 'loading'
+  }, [isLoading, session])
+
+  return {
+    session,
+    data: session,
+    logout,
+    login,
+    status,
+    increment,
+    isLoading,
+    subscriptions: [] as any,
+  }
 }

@@ -176,10 +176,11 @@ export const posts = table(
       .$defaultFn(() => v4()),
     slug: text('slug')
       .unique()
+      .notNull()
       .$defaultFn(() => v4()),
     title: text('title', { length: 500 }).default(''),
     description: text('description', { length: 1000 }).default(''),
-    content: text('content').default(''),
+    content: text('content').notNull().default(''),
     cid: text('cid', { length: 100 }).default(''),
     nodeId: text('nodeId').unique(),
     creationId: integer('creationId'),
@@ -351,3 +352,10 @@ export const accessTokensRelations = relations(
     user: one(users, { references: [users.id], fields: [accessTokens.userId] }),
   }),
 )
+
+export type Site = typeof sites.$inferSelect
+export type Post = typeof posts.$inferSelect
+export type User = typeof users.$inferSelect
+export type Comment = typeof comments.$inferSelect
+export type Tag = typeof tags.$inferSelect
+export type PostTag = typeof postTags.$inferSelect

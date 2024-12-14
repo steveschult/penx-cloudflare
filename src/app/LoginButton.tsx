@@ -9,9 +9,9 @@ export function LoginButton() {
 
   return (
     <div>
-      {session.isLoggedIn && <div>user: {session?.username}</div>}
+      {session?.isLoggedIn && <div>user: {session?.username}</div>}
 
-      {!session.isLoggedIn && (
+      {!session?.isLoggedIn && (
         <Button
           onClick={async () => {
             //

@@ -1,15 +1,24 @@
 import { SessionOptions } from 'iron-session'
+import { UserRole } from './types'
 
 export interface SessionData {
   username: string
   isLoggedIn: boolean
   counter: number
+  subscriptions: any[]
+  role: any
+  user: any
+  userId: string
 }
 
 export const defaultSession: SessionData = {
   username: '',
   isLoggedIn: false,
   counter: 0,
+  subscriptions: [],
+  role: UserRole.READER,
+  user: {},
+  userId: '',
 }
 
 export const sessionOptions: SessionOptions = {

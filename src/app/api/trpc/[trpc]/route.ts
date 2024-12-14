@@ -15,6 +15,4 @@ const handler = async (req: Request) => {
   return cors(req, response)
 }
 
-export const maxDuration = 60 * 2
-
 export { handler as GET, handler as POST }

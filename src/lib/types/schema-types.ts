@@ -23,20 +23,20 @@ export enum UserRole {
   READER = 'READER',
 }
 
-export const PostType = {
-  ARTICLE: 'ARTICLE',
-  IMAGE: 'IMAGE',
-  VIDEO: 'VIDEO',
-  AUDIO: 'AUDIO',
-  NFT: 'NFT',
-  FIGMA: 'FIGMA',
-  NOTE: 'NOTE',
+export enum PostType {
+  ARTICLE = 'ARTICLE',
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+  AUDIO = 'AUDIO',
+  NFT = 'NFT',
+  FIGMA = 'FIGMA',
+  NOTE = 'NOTE',
 }
 
-export const GateType = {
-  FREE: 'FREE',
-  PAID: 'PAID',
-  MEMBER_ONLY: 'MEMBER_ONLY',
+export enum GateType {
+  FREE = 'FREE',
+  PAID = 'PAID',
+  MEMBER_ONLY = 'MEMBER_ONLY',
 }
 
 export const PostStatus = {
