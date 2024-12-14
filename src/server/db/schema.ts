@@ -229,7 +229,7 @@ export const comments = table(
       .primaryKey()
       .$defaultFn(() => v4()),
     content: text('content').default(''),
-    parentId: text('parentId'),
+    parentId: text('parentId').default(''),
     replyCount: integer('replyCount').default(0),
     postId: text('postId').notNull(),
     userId: text('userId').notNull(),

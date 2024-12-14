@@ -103,6 +103,7 @@
     "dexie": "^4.0.10",
     "escape-html": "^1.0.3",
     "framer-motion": "^11.14.4",
+    "github-slugger": "^2.0.0",
     "graphql-request": "^7.1.2",
     "idb-keyval": "^6.2.1",
     "iron-session": "^8.0.4",

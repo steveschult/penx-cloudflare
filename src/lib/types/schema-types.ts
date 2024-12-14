@@ -1,20 +1,20 @@
-export const AuthType = {
-  GOOGLE: 'GOOGLE',
-  REOWN: 'REOWN',
-  RAINBOW_KIT: 'RAINBOW_KIT',
-  PRIVY: 'PRIVY',
+export enum AuthType {
+  GOOGLE = 'GOOGLE',
+  REOWN = 'REOWN',
+  RAINBOW_KIT = 'RAINBOW_KIT',
+  PRIVY = 'PRIVY',
 }
 
-export const StorageProvider = {
-  IPFS: 'IPFS',
-  R2: 'R2',
-  VERCEL_BLOB: 'VERCEL_BLOB',
-  SUPABASE_STORAGE: 'SUPABASE_STORAGE',
+export enum StorageProvider {
+  IPFS = 'IPFS',
+  R2 = 'R2',
+  VERCEL_BLOB = 'VERCEL_BLOB',
+  SUPABASE_STORAGE = 'SUPABASE_STORAGE',
 }
 
-export const SiteMode = {
-  BASIC: 'BASIC',
-  NOTE_TAKING: 'NOTE_TAKING',
+export enum SiteMode {
+  BASIC = 'BASIC',
+  NOTE_TAKING = 'NOTE_TAKING',
 }
 
 export enum UserRole {
@@ -39,20 +39,20 @@ export enum GateType {
   MEMBER_ONLY = 'MEMBER_ONLY',
 }
 
-export const PostStatus = {
-  PUBLISHED: 'PUBLISHED',
-  DRAFT: 'DRAFT',
-  ARCHIVED: 'ARCHIVED',
+export enum PostStatus {
+  PUBLISHED = 'PUBLISHED',
+  DRAFT = 'DRAFT',
+  ARCHIVED = 'ARCHIVED',
 }
 
-export const CommentStatus = {
-  OPEN: 'OPEN',
-  CLOSED: 'CLOSED',
+export enum CommentStatus {
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
 }
 
-export const ProviderType = {
-  GOOGLE: 'GOOGLE',
-  GITHUB: 'GITHUB',
-  WALLET: 'WALLET',
-  FARCASTER: 'FARCASTER',
+export enum ProviderType {
+  GOOGLE = 'GOOGLE',
+  GITHUB = 'GITHUB',
+  WALLET = 'WALLET',
+  FARCASTER = 'FARCASTER',
 }
