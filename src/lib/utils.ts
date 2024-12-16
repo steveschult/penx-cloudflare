@@ -1,3 +1,4 @@
+import { User } from '@/server/db/schema'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { AccountWithUser, ProviderType } from './types'
@@ -115,4 +116,20 @@ export function isValidUUIDv4(uuid = ''): boolean {
 export function getAccountAddress(account: AccountWithUser) {
   if (account.providerType !== ProviderType.WALLET) return ''
   return account.providerAccountId || ''
+}
+
+export function getUserName(user: User) {
+  const { displayName = '', name = '' } = user
+
+  if (displayName) {
+    if (isAddress(displayName)) {
+      return displayName.slice(0, 3) + '...' + displayName.slice(-4)
+    }
+    return user.displayName || user.name
+  }
+
+  if (isAddress(name)) {
+    return name.slice(0, 3) + '...' + name.slice(-4)
+  }
+  return user.displayName || user.name
 }

@@ -33,7 +33,6 @@ export function CommentInput({
   refetchComments,
   onCancel,
 }: Props) {
-  const userID = useAddress()
   const [content, setContent] = useState('')
   const { isPending, mutateAsync } = trpc.comment.create.useMutation()
 
@@ -47,16 +46,9 @@ export function CommentInput({
       return
     }
 
-    if (!authenticated) {
-      toast.error('You need to log in to comment.')
-
-      return
-    }
-
     try {
       await mutateAsync({
         postId,
-        userId: userID as string,
         content,
         parentId,
       })

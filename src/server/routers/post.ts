@@ -156,11 +156,13 @@ export const postRouter = router({
         })
         .where(eq(posts.id, input.postId))
 
-      revalidatePath('/', 'layout')
-      // revalidatePath('/(blog)/(home)', 'page')
-      revalidatePath('/(blog)/posts', 'page')
-      revalidatePath('/(blog)/posts/[...slug]', 'page')
-      revalidatePath('/(blog)/posts/page/[page]', 'page')
+      try {
+        revalidatePath('/', 'layout')
+        // revalidatePath('/(blog)/(home)', 'page')
+        revalidatePath('/(blog)/posts', 'page')
+        revalidatePath('/(blog)/posts/[...slug]', 'page')
+        revalidatePath('/(blog)/posts/page/[page]', 'page')
+      } catch (error) {}
 
       // sync google
       // syncToGoogleDrive(ctx.token.uid, {
@@ -171,8 +173,6 @@ export const postRouter = router({
       //   cid: res.cid,
       //   gateType,
       // } as any)
-
-      return newPost
 
       return newPost
     }),

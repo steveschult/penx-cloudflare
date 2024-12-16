@@ -57,7 +57,7 @@ export const users = table('user', {
     .primaryKey()
     .$defaultFn(() => v4()),
   role: text('role').notNull().default(UserRole.READER),
-  name: text('name', { length: 255 }).default(''),
+  name: text('name', { length: 255 }).notNull().default(''),
   displayName: text('displayName', { length: 255 }).default(''),
   ensName: text('ensName', { length: 255 }),
   email: text('email', { length: 255 }).unique(),
@@ -242,8 +242,8 @@ export const commentsRelations = relations(comments, ({ one, many }) => ({
   user: one(users, { references: [users.id], fields: [comments.userId] }),
   post: one(posts, { references: [posts.id], fields: [comments.userId] }),
   parent: one(comments, {
-    references: [comments.parentId],
-    fields: [comments.userId],
+    references: [comments.id],
+    fields: [comments.parentId],
   }),
   // replies: many(comments),
 }))

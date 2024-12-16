@@ -1,4 +1,4 @@
-import { and, eq, sql } from 'drizzle-orm'
+import { and, eq, isNull, sql } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { db } from '../db'
@@ -11,10 +11,30 @@ export const commentRouter = router({
     .input(z.string())
     .query(async ({ ctx, input: postId }) => {
       const comments = await db.query.comments.findMany({
-        where: (comments, { eq }) =>
-          and(eq(comments.postId, postId), eq(comments.parentId, '')),
+        where: (comments, { eq }) => and(eq(comments.postId, postId)),
         with: {
-          user: true,
+          user: {
+            columns: {
+              id: true,
+              name: true,
+              displayName: true,
+              email: true,
+              image: true,
+            },
+          },
+          parent: {
+            with: {
+              user: {
+                columns: {
+                  id: true,
+                  name: true,
+                  displayName: true,
+                  email: true,
+                  image: true,
+                },
+              },
+            },
+          },
         },
         orderBy: (comments, { asc }) => [asc(comments.createdAt)],
       })
@@ -27,7 +47,6 @@ export const commentRouter = router({
       z.object({
         postId: z.string(),
         content: z.string(),
-        userId: z.string(),
         parentId: z.string().nullable().optional(),
       }),
     )
@@ -49,17 +68,17 @@ export const commentRouter = router({
             replyCount: sql`replyCount + 1`,
           })
           .where(eq(comments.id, input.parentId))
-      } else {
-        const updatedPost = await db
-          .update(posts)
-          .set({ commentCount: sql`commentCount + 1` })
-          .where(eq(posts.id, input.postId))
-          .returning()
-
-        revalidatePath('/(blog)/(home)', 'page')
-        revalidatePath('/(blog)/posts', 'page')
-        revalidatePath(`/posts/${updatedPost[0]?.slug}`)
       }
+
+      const updatedPost = await db
+        .update(posts)
+        .set({ commentCount: sql`commentCount + 1` })
+        .where(eq(posts.id, input.postId))
+        .returning()
+
+      revalidatePath('/(blog)/(home)', 'page')
+      revalidatePath('/(blog)/posts', 'page')
+      revalidatePath(`/posts/${updatedPost[0]?.slug}`)
 
       return newComment
     }),
