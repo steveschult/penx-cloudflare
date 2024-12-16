@@ -38,7 +38,7 @@ Then copy the `database_id` and replace the `database_id` in `wrangler.toml`.
 
 ### Setup Cloudflare R2 bucket
 
-Run `npx wrangler d1 create penx-blog` to create a  Cloudflare D1 database.
+Run `npx wrangler r2 bucket create penx-bucket` to create a  Cloudflare R2 bucket.
 
 If success, you will get this response.
 

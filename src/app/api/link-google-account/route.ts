@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
       .update(users)
       .set({
         email,
-        name: name,
+        name: name || '',
         displayName: name,
         google: JSON.stringify({
           name,

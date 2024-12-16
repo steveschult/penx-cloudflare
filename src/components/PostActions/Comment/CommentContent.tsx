@@ -14,18 +14,6 @@ interface IParent extends Comment {
   user: User
 }
 
-interface IReply {
-  id: string
-  content: string
-  createdAt: string
-  updatedAt: string
-  userId: string
-  user: User
-  parent?: IParent
-  parentId: string
-  postId: string
-}
-
 interface Props {
   postId: string
 }

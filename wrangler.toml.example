@@ -20,10 +20,10 @@ binding = "AI"
 # Bind a D1 database. D1 is Cloudflare’s native serverless SQL database.
 # Docs: https://developers.cloudflare.com/pages/functions/bindings/#d1-databases
 # 
-# npx wrangler d1 create penx_blog
+# npx wrangler d1 create penx-blog
 [[d1_databases]]
 binding = "DB"
-database_name = "penx_blog"
+database_name = "penx-blog"
 database_id = "{TODO:database id}" # replace with real database id
 
 # Bind an R2 Bucket. Use R2 to store arbitrarily large blobs of data, such as files.
