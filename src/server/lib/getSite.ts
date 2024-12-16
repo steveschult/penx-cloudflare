@@ -17,8 +17,6 @@ export async function getSite() {
       image: '',
       socials: {},
       config: {},
-      authType: AuthType.RAINBOW_KIT,
-      storageProvider: StorageProvider.IPFS,
     } as any as Site
   }
 
@@ -33,8 +31,6 @@ export async function getSite() {
 
   return {
     ...site,
-    // spaceId: site.spaceId || process.env.NEXT_PUBLIC_SPACE_ID,
-    spaceId: process.env.NEXT_PUBLIC_SPACE_ID || site.spaceId,
     logo: getUrl(site.logo || ''),
     image: getUrl(site.image || ''),
     about: getAbout(),

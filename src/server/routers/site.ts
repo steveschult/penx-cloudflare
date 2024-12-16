@@ -37,19 +37,6 @@ export const siteRouter = router({
             medium: z.string().optional(),
           })
           .optional(),
-        authType: z.nativeEnum(AuthType).optional(),
-        authConfig: z
-          .object({
-            privyAppId: z.string().optional(),
-            privyAppSecret: z.string().optional(),
-          })
-          .optional(),
-        storageProvider: z.nativeEnum(StorageProvider).optional(),
-        storageConfig: z
-          .object({
-            vercelBlobToken: z.string().optional(),
-          })
-          .optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -81,7 +68,8 @@ export const siteRouter = router({
           .update(sites)
           .set({
             ...data,
-          } as any)
+            socials: JSON.stringify(data.socials || {}),
+          })
           .where(eq(sites.id, id))
         revalidate()
         return newSite

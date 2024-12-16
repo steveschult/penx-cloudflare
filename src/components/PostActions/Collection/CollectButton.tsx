@@ -31,7 +31,6 @@ export function CollectButton({ post, className }: Props) {
     isLoading: false,
     isOpen: false,
   })
-  if (site.authType === AuthType.GOOGLE) return null
 
   const authenticated = !!data
 

@@ -24,12 +24,6 @@ import {
 import * as t from 'drizzle-orm/sqlite-core'
 import { v4 } from 'uuid'
 
-export const customerTable = table('customer', {
-  customerId: integer('customerId').primaryKey(),
-  companyName: text('companyName').notNull(),
-  contactName: text('contactName').notNull(),
-})
-
 export const sites = table('site', {
   id: text('id')
     .primaryKey()
@@ -43,11 +37,6 @@ export const sites = table('site', {
   image: text('image', { length: 2183 }).default(''),
   email: text('email', { length: 255 }).unique(),
   mode: text('mode').default(SiteMode.BASIC),
-  authSecret: text('authSecret', { length: 255 }).unique(),
-  authType: text('authType').default(AuthType.RAINBOW_KIT),
-  authConfig: text('authConfig'),
-  storageProvider: text('storageProvider').default(StorageProvider.IPFS),
-  storageConfig: text('storageConfig'),
   socials: text('socials'),
   config: text('config'),
   themeName: text('themeName', { length: 50 }),
@@ -67,7 +56,7 @@ export const users = table('user', {
   id: text('id')
     .primaryKey()
     .$defaultFn(() => v4()),
-  role: text('role').default(UserRole.READER),
+  role: text('role').notNull().default(UserRole.READER),
   name: text('name', { length: 255 }).default(''),
   displayName: text('displayName', { length: 255 }).default(''),
   ensName: text('ensName', { length: 255 }),
@@ -265,7 +254,7 @@ export const tags = table(
     id: text('id')
       .primaryKey()
       .$defaultFn(() => v4()),
-    name: text('name', { length: 50 }).default(''),
+    name: text('name', { length: 50 }).notNull().default(''),
     color: text('color', { length: 50 }).default(''),
     postCount: integer('postCount').default(0),
     hidden: integer('hidden', { mode: 'boolean' }).default(false),
@@ -356,6 +345,8 @@ export const accessTokensRelations = relations(
 export type Site = typeof sites.$inferSelect
 export type Post = typeof posts.$inferSelect
 export type User = typeof users.$inferSelect
+export type Account = typeof accounts.$inferSelect
 export type Comment = typeof comments.$inferSelect
 export type Tag = typeof tags.$inferSelect
 export type PostTag = typeof postTags.$inferSelect
+export type AccessToken = typeof accessTokens.$inferSelect

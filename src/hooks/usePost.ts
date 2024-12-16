@@ -30,31 +30,31 @@ export function updatePostPublishStatus() {
 }
 
 export function addPostTag(postTag: PostTagWithTag) {
-  // const post = store.get(postAtom)
-  // store.set(postAtom, {
-  //   ...post,
-  //   postTags: [...post.postTags, postTag as any],
-  // })
-  // revalidateMetadata(`posts`)
-  // revalidateMetadata(`tag-${postTag.tag.name}`)
+  const post = store.get(postAtom)
+  store.set(postAtom, {
+    ...post,
+    postTags: [...post.postTags, postTag as any],
+  })
+  revalidateMetadata(`posts`)
+  revalidateMetadata(`tag-${postTag.tag.name}`)
 }
 
 export function removePostTag(postTag: PostTagWithTag) {
-  // const post = store.get(postAtom)
-  // const newTags = post.postTags.filter((tag) => tag.id !== postTag.id)
-  // store.set(postAtom, {
-  //   ...post,
-  //   postTags: newTags,
-  // })
-  // revalidateMetadata(`posts`)
-  // revalidateMetadata(`tag-${postTag.tag.name}`)
+  const post = store.get(postAtom)
+  const newTags = post.postTags.filter((tag) => tag.id !== postTag.id)
+  store.set(postAtom, {
+    ...post,
+    postTags: newTags,
+  })
+  revalidateMetadata(`posts`)
+  revalidateMetadata(`tag-${postTag.tag.name}`)
 }
 
 export async function loadPost(postId: string) {
-  // store.set(postLoadingAtom, true)
-  // const post = await api.post.byId.query(postId)
-  // store.set(postAtom, post)
-  // store.set(postLoadingAtom, false)
+  store.set(postLoadingAtom, true)
+  const post = await api.post.byId.query(postId)
+  store.set(postAtom, post)
+  store.set(postLoadingAtom, false)
 }
 
 export function updatePost(data: Partial<Post>) {

@@ -55,7 +55,7 @@ export function ImageCreation({ post }: { post: Post }) {
           />
         </div>
         <div className="mb-8">
-          <ProfileAvatar showAddress />
+          <ProfileAvatar showName />
         </div>
 
         <ImageCreationUpload post={data} />

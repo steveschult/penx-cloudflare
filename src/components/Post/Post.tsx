@@ -70,8 +70,8 @@ export function Post({ post }: { post: PostType }) {
             className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
           />
         </div>
-        <div className="mb-8 space-y-2">
-          <ProfileAvatar showAddress />
+        <div className="mb-4 space-y-2">
+          <ProfileAvatar showName />
           {/* <Tags /> */}
         </div>
 

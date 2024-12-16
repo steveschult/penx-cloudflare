@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSiteContext } from '@/components/SiteContext'
 import { useCheckChain } from '@/hooks/useCheckChain'
 import { usePost } from '@/hooks/usePost'
 import { useWagmiConfig } from '@/hooks/useWagmiConfig'
@@ -17,30 +18,14 @@ import { toast } from 'sonner'
 import { Address } from 'viem'
 import { useAccount, useWriteContract } from 'wagmi'
 
-// import { useSiteContext } from '../components/SiteContext'
-
 export function usePublishPost() {
-  // const { spaceId, id } = useSiteContext()
-  const { spaceId, id } = {} as any
+  const { spaceId, id } = useSiteContext()
   const { address } = useAccount()
   const [isLoading, setLoading] = useState(false)
   const checkChain = useCheckChain()
   const { writeContractAsync } = useWriteContract()
   const wagmiConfig = useWagmiConfig()
-  const { post: currentPost } = usePost()
-
-  function getContent(node: IObjectNode) {
-    if (currentPost) return currentPost.content
-
-    const nodes = store.node.getNodes()
-    const content = nodeToSlate({
-      node: node,
-      nodes,
-      isOutliner: false,
-      isOutlinerSpace: false,
-    })
-    return JSON.stringify(content)
-  }
+  const { post } = usePost()
 
   function getImage(node: IObjectNode) {
     if (!node) return ''
@@ -57,13 +42,6 @@ export function usePublishPost() {
       collectible: boolean,
     ) => {
       setLoading(true)
-
-      const content = getContent(node)
-
-      // console.log('======>>>>>content:', content)
-      // console.log('======>>>>>node:', node)
-      // const post = currentPost || (await api.post.bySlug.query(node.id))
-      let post = {} as any
 
       let creationId: number | undefined
       try {
@@ -91,31 +69,17 @@ export function usePublishPost() {
           creationId = Number(creation.id)
         }
 
-        // await api.post.publish.mutate({
-        //   type: post?.type || node.props?.objectType || PostType.ARTICLE,
-        //   postId: post?.id,
-        //   nodeId: node?.id,
-        //   gateType,
-        //   collectible,
-        //   creationId,
-        //   image: getImage(node),
-        //   content: content,
-        // })
+        await api.post.publish.mutate({
+          postId: post?.id,
+          gateType,
+          collectible,
+          creationId,
+        })
 
-        // if (node) {
-        //   await store.node.updateNode(node.id, {
-        //     props: {
-        //       ...node.props,
-        //       gateType,
-        //       collectible,
-        //     },
-        //   } as IObjectNode)
-        // }
-
-        // setLoading(false)
-        // revalidateMetadata(`posts`)
-        // // revalidateMetadata(`posts-${post.slug}`)
-        // toast.success('Post published successfully!')
+        setLoading(false)
+        revalidateMetadata(`posts`)
+        // revalidateMetadata(`posts-${post.slug}`)
+        toast.success('Post published successfully!')
       } catch (error) {
         console.log('========error:', error)
         const msg = extractErrorMessage(error)

@@ -53,10 +53,14 @@ export const postRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      return db.insert(posts).values({
-        userId: ctx.token.uid,
-        ...input,
-      })
+      const post = await db
+        .insert(posts)
+        .values({
+          userId: ctx.token.uid,
+          ...input,
+        })
+        .returning()
+      return post[0]!
     }),
 
   update: protectedProcedure
@@ -104,73 +108,29 @@ export const postRouter = router({
   publish: protectedProcedure
     .input(
       z.object({
-        postId: z.string().optional(),
-        nodeId: z.string().optional(),
-        creationId: z.number().optional(),
-        type: z.nativeEnum(PostType),
+        postId: z.string(),
+        creationId: z.number().nullable().optional(),
         gateType: z.nativeEnum(GateType),
         collectible: z.boolean(),
-        image: z.string().optional(),
-        content: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      console.log('========>input:', input, ctx.token)
       const userId = ctx.token.uid
-      const { nodeId, gateType, collectible, creationId } = input
+      const { gateType, collectible, creationId } = input
 
-      let post = await db.query.posts.findFirst({
-        where: or(eq(posts.nodeId, nodeId!), eq(posts.id, input.postId!)),
-      })
-
-      function getPostInfo() {
-        if (input.postId) {
-          return { title: post?.title, content: input.content }
-        }
-
-        const [title, ...nodes] = JSON.parse(input.content)
-
-        return {
-          title: SlateNode.string(title),
-          content: JSON.stringify(nodes),
-        }
-      }
-      const info = getPostInfo()
-
-      if (!post) {
-        ;[post] = await db
-          .insert(posts)
-          .values({
-            userId,
-            slug: input.nodeId,
-            title: info.title,
-            type: input.type,
-            nodeId: input.nodeId,
-            postStatus: PostStatus.PUBLISHED,
-            image: input.image,
-            gateType: input.gateType,
-            collectible: input.collectible,
-            content: info.content,
-          })
-          .returning()
-      } else {
-        ;[post] = await db
-          .update(posts)
-          .set({
-            title: info.title,
-            type: input.type,
-            image: input.image,
-            postStatus: PostStatus.PUBLISHED,
-            gateType: input.gateType,
-            collectible: input.collectible,
-            content: info.content,
-          })
-          .where(eq(posts.id, post.id))
-          .returning()
-      }
+      await db
+        .update(posts)
+        .set({
+          postStatus: PostStatus.PUBLISHED,
+          gateType: input.gateType,
+          collectible: input.collectible,
+        })
+        .where(eq(posts.id, input.postId))
 
       const newPost = await db.query.posts.findFirst({
         with: { postTags: { with: { tag: true } } },
-        where: eq(posts.id, post.id),
+        where: eq(posts.id, input.postId),
       })
 
       const res: any = await fetch(IPFS_ADD_URL, {
@@ -194,7 +154,7 @@ export const postRouter = router({
           publishedAt: new Date(),
           gateType,
         })
-        .where(eq(posts.id, post.id))
+        .where(eq(posts.id, input.postId))
 
       revalidatePath('/', 'layout')
       // revalidatePath('/(blog)/(home)', 'page')

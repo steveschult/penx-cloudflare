@@ -21,26 +21,22 @@ export function GoogleOauthDialog() {
   const { isOpen, setIsOpen } = useGoogleOauthDialog()
   const searchParams = useSearchParams()
   const authType = searchParams?.get('auth_type')
-  const { login: signIn } = useSession()
+  const { login } = useSession()
 
-  const login = useCallback(
+  const loginWithGoogle = useCallback(
     async function () {
       const accessToken = searchParams?.get('access_token')!
       try {
         const info = await getGoogleUserInfo(accessToken)
         console.log('=====info:', info)
 
-        const result: any = await signIn('penx-google', {
-          // email: info.email,
-          // openid: info.sub,
-          // picture: info.picture,
-          // name: info.name,
-          // redirect: false,
+        const result: any = await login({
+          type: 'penx-google',
+          email: info.email,
+          openid: info.sub,
+          picture: info.picture,
+          name: info.name,
         })
-
-        if (!result?.ok) {
-          toast.error('Failed to sign in with Google. Please try again')
-        }
       } catch (error) {
         console.log('>>>>>>>>>>>>erorr:', error)
         toast.error('Failed to sign in with Google. Please try again.')
@@ -53,9 +49,9 @@ export function GoogleOauthDialog() {
   useEffect(() => {
     if (authType === 'google' && !isOpen) {
       setIsOpen(true)
-      login()
+      loginWithGoogle()
     }
-  }, [authType, isOpen, setIsOpen, searchParams, login])
+  }, [authType, isOpen, setIsOpen, searchParams, loginWithGoogle])
 
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>

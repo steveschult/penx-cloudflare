@@ -1,7 +1,7 @@
 import { NETWORK, NetworkNames } from '@/lib/constants'
 import { ProviderType, UserRole } from '@/lib/types'
 import { TRPCError } from '@trpc/server'
-import { eq } from 'drizzle-orm'
+import { eq, or } from 'drizzle-orm'
 import { createPublicClient, http } from 'viem'
 import { base, baseSepolia } from 'viem/chains'
 import { z } from 'zod'
@@ -17,8 +17,10 @@ export const userRouter = router({
 
   contributors: publicProcedure.query(async ({ ctx }) => {
     return db.query.users.findMany({
-      where: (users, { eq }) =>
-        eq(users.role, UserRole.ADMIN) || eq(users.role, UserRole.AUTHOR),
+      where: or(
+        eq(users.role, UserRole.ADMIN),
+        eq(users.role, UserRole.AUTHOR),
+      ),
       with: { accounts: true },
     })
   }),
@@ -167,9 +169,9 @@ export const userRouter = router({
         .where(eq(users.id, input.userId))
     }),
 
-  accountsByUser: publicProcedure.query(({ ctx }) => {
+  myAccounts: publicProcedure.query(({ ctx }) => {
     return db.query.accounts.findMany({
-      where: eq(users.id, ctx.token.uid),
+      where: eq(accounts.userId, ctx.token.uid),
     })
   }),
 

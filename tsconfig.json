@@ -4,15 +4,15 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true,
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false,
+    "noEmit": true,
     "esModuleInterop": true,
     "declarationMap": false,
     "module": "esnext",
-    "downlevelIteration": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
+    "downlevelIteration": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
@@ -23,15 +23,15 @@
     ],
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "types": ["@cloudflare/workers-types/2023-07-01"]
+    }
   },
   "include": [
     "index.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "prisma/seed.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,6 +1,5 @@
-import { env } from '@/env';
-import { defineConfig } from 'drizzle-kit';
-
+import { env } from '@/env'
+import { defineConfig } from 'drizzle-kit'
 
 /*
  * NOTE: Workaround to make drizzle studio work with D1.

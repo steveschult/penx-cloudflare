@@ -57,10 +57,8 @@ export const CoverUpload = forwardRef<HTMLDivElement, Props>(
     if (value) {
       return (
         <div className="w-full h-[360px] relative">
-          <Image
+          <img
             src={getUrl(value)}
-            width={1000}
-            height={1000}
             className="absolute left-0 top-0 w-full h-[360px] cursor-pointer object-cover"
             alt=""
           />

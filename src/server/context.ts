@@ -1,4 +1,7 @@
+import { getSessionOptions, SessionData } from '@/lib/session'
 import { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
+import { getIronSession } from 'iron-session'
+import { cookies } from 'next/headers'
 
 interface CreateContextOptions {
   // session: Session | null
@@ -10,10 +13,6 @@ type Token = {
   role: string
   address: string
   email: string
-  sub: string
-  iat: number
-  exp: number
-  jti: string
   accessToken: string
 }
 
@@ -37,5 +36,17 @@ export async function createContext(opts: FetchCreateContextFnOptions) {
   // for API-response caching see https://trpc.io/docs/v11/caching
   const { req } = opts
 
-  return { token: {} as Token }
+  const sessionOptions = getSessionOptions()
+  const session = (await getIronSession(
+    cookies(),
+    sessionOptions,
+  )) as SessionData
+
+  return {
+    token: {
+      uid: session?.userId || '',
+      role: session?.role || '',
+      address: session?.address || '',
+    } as Token,
+  }
 }

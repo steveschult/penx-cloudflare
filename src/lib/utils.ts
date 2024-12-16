@@ -103,7 +103,6 @@ export function isIPFSCID(str = '') {
 }
 
 export function getUrl(value = '') {
-  // return isIPFSCID(str) ? `${IPFS_GATEWAY}/ipfs/${str}` : str
   return isIPFSCID(value) ? `/api/ipfs-image?cid=${value}` : value
 }
 

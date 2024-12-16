@@ -31,7 +31,6 @@ export function TipTokenButton({ post, receivers }: Props) {
   })
 
   const { openConnectModal } = useConnectModal()
-  if (site.authType === AuthType.GOOGLE) return null
 
   const authenticated = !!data
 
